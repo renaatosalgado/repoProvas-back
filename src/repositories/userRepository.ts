@@ -11,7 +11,17 @@ export async function findByEmail(email: string) {
   return user;
 }
 
-export async function create(signUpData: authService.AuthData) {  
+export async function findById(userId: number) {
+  const user = await client.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  return user;
+}
+
+export async function create(signUpData: authService.AuthData) {
   await client.user.create({
     data: signUpData,
   });

@@ -3,6 +3,7 @@ import { validateSchemaMiddleware } from "../middlewares/validateSchemaMiddlewar
 import loginSchema from "../schemas/loginSchema.js";
 import signUpSchema from "../schemas/signUpSchema.js";
 import * as authController from "../controllers/authController.js";
+import { validateTokenMiddleware } from "../middlewares/validateTokenMiddleware.js";
 
 const authRouter = Router();
 
@@ -11,6 +12,10 @@ authRouter.post(
   validateSchemaMiddleware(signUpSchema),
   authController.createUser
 );
-authRouter.post("/auth/login", validateSchemaMiddleware(loginSchema));
+authRouter.post(
+  "/auth/login",
+  validateSchemaMiddleware(loginSchema),
+  authController.login
+);
 
 export default authRouter;
