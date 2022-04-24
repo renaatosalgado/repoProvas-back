@@ -62,6 +62,10 @@ export async function getSessionById(sessionId: number) {
   return session;
 }
 
+export async function deleteSession(sessionId: number) {
+  await authRepository.deleteSession(sessionId);
+}
+
 export async function verifySession(userId: number) {
   const session = await getSessionByUserId(userId);
   if (session) return session;

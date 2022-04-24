@@ -3,7 +3,8 @@ type AppErrorTypes =
   | "invalidInput"
   | "unauthorized"
   | "conflict"
-  | "forbidden";
+  | "forbidden"
+  | "require_auth";
 
 export interface AppError {
   type: AppErrorTypes;
@@ -20,4 +21,5 @@ export function errorTypeToStatusCode(type: AppErrorTypes) {
   if (type === "unauthorized") return 401;
   if (type === "conflict") return 409;
   if (type === "forbidden") return 403;
+  if (type === "require_auth") return 511;
 }

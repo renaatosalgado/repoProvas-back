@@ -18,4 +18,16 @@ authRouter.post(
   authController.login
 );
 
+authRouter.get(
+  "/auth/validate",
+  validateTokenMiddleware,
+  authController.validateToken
+);
+
+authRouter.delete(
+  "/auth/logout",
+  validateTokenMiddleware,
+  authController.logout
+);
+
 export default authRouter;

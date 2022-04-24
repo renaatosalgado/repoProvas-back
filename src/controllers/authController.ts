@@ -22,3 +22,17 @@ export async function login(req: Request, res: Response) {
 
   res.status(200).send(token);
 }
+
+export function validateToken(req: Request, res: Response) {
+  res.sendStatus(200);
+}
+
+export async function logout(req: Request, res: Response) {
+  const user = res.locals.user;
+
+  const session = await authService.getSessionByUserId(user.id);
+
+  await authService.deleteSession(session.id);
+
+  res.sendStatus(200);
+}

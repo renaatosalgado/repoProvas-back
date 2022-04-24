@@ -33,13 +33,13 @@ export async function validateTokenMiddleware(
 
   if (!session) {
     throw {
-      type: "unauthorized",
+      type: "require_auth",
       message: "Sessão encerrada, por favor faça o login novamente.",
     };
   }
 
   const user = await userService.findById(session.userId);
-  
+
   if (!user)
     throw {
       type: "unauthorized",
