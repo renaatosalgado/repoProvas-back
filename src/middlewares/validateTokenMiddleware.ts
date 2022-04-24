@@ -19,34 +19,40 @@ export async function validateTokenMiddleware(
 
   const secretKey = process.env.JWT_SECRET;
 
-  const data = jwt.verify(token, secretKey);
+  try {
+    const data = jwt.verify(token, secretKey);
 
-  const { sessionId } = data as JwtPayload;
+    const { sessionId } = data as JwtPayload;
 
-  if (!sessionId)
+    if (!sessionId)
+      throw {
+        type: "unauthorized",
+        message: "Este token não é válido.",
+      };
+
+    const session = await authService.getSessionById(sessionId);
+
+    if (!session) {
+      throw {
+        type: "require_auth",
+        message: "Sessão encerrada, por favor faça o login novamente.",
+      };
+    }
+
+    const user = await userService.findById(session.userId);
+
+    if (!user)
+      throw {
+        type: "unauthorized",
+        message: "Usuário inexistente e/ou token inválido.",
+      };
+    res.locals.user = user;
+  } catch (error) {
     throw {
       type: "unauthorized",
       message: "Este token não é válido.",
     };
-
-  const session = await authService.getSessionById(sessionId);
-
-  if (!session) {
-    throw {
-      type: "require_auth",
-      message: "Sessão encerrada, por favor faça o login novamente.",
-    };
   }
-
-  const user = await userService.findById(session.userId);
-
-  if (!user)
-    throw {
-      type: "unauthorized",
-      message: "Usuário inexistente e/ou token inválido.",
-    };
-
-  res.locals.user = user;
 
   next();
 }
