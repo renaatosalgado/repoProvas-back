@@ -32,3 +32,5 @@ export async function listAll(disciplineId: number) {
   });
   return tests;
 }
+
+export async function listTeacherTestsCategories(teacherId: number) {}

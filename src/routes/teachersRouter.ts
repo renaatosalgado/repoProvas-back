@@ -10,4 +10,16 @@ teachersRouter.get(
   teachersController.listAll
 );
 
+teachersRouter.get(
+  "/teachers/:teacherId/tests",
+  validateTokenMiddleware,
+  teachersController.listTeacherTests
+);
+
+teachersRouter.get(
+  "/teachers/:teacherId/tests/categories",
+  validateTokenMiddleware,
+  teachersController.listTeacherTestsCategories
+);
+
 export default teachersRouter;
