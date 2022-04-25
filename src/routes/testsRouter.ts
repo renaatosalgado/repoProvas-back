@@ -4,6 +4,7 @@ import * as testsController from "../controllers/testsController.js";
 
 const testsRouter = Router();
 
-testsRouter.get("/get/disciplines/tests/discipline/:disciplineId", validateTokenMiddleware, testsController.listAll);
+testsRouter.get("/terms/disciplines/:disciplineId/tests", validateTokenMiddleware, testsController.listAll);
+//"/terms/:termId/disciplines/:disciplineId/tests"
 
 export default testsRouter;
